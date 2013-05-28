@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yatodo.Tests", "Yatodo.Tests.csproj", "{92728ECB-713E-4688-BAC0-A526FBEF0084}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yatodo.Tests", "Yatodo.Tests\Yatodo.Tests.csproj", "{92728ECB-713E-4688-BAC0-A526FBEF0084}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D15D2A76-E35A-4710-A292-389779DE973B}"
 	ProjectSection(SolutionItems) = preProject
