@@ -13,11 +13,16 @@ function Get-TestDlls (){
 
 task default -depends run-unit-tests 
 
-task build {
+task build -depends clean {
   exec { & msbuild $solution /v:m /m  /p:configuration=$buildConfiguration }
 }
 
-task run-unit-tests {
+task clean {
+  exec { & msbuild $solution /v:m /m  /p:configuration=$buildConfiguration /p:tagret=Clean }
+}
+
+
+task run-unit-tests -depends build {
   $xunitRunner = Join-Path $srcDir "packages\xunit.runners.1.9.1\tools\xunit.console.clr4.exe"
   $testDlls = Get-TestDlls
   exec { & $xunitRunner $testDlls }

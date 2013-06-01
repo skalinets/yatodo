@@ -90,8 +90,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WebEngine.cs" />
+    <Compile Include="when_we_run_regression_tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_we_run_in_progress_tests.cs" />
+    <Compile Include="when_we_run_xunit_tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
