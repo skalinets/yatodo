@@ -1,7 +1,7 @@
 @using BootstrapSupport
 @model System.Collections.IEnumerable   
     <h4>@Model.GetLabel() <small>Listing</small></h4>
-<table class="table table-striped">
+<table class="table table-striped" id="data-table">
     <caption></caption>
     <thead>
         <tr>
@@ -14,7 +14,7 @@
             <th></th>
         </tr>
     </thead>
-    @{ int index = 0; }
+    @{ int index = 0; } 
     @foreach (var model in Model)
     {
         ViewData[index.ToString()] = model;
@@ -22,10 +22,13 @@
             @foreach (var property in model.VisibleProperties())
             {
                 <td>
-                    @Html.Display(index + "." + property.Name)
+                    <span id='@(model.GetId() + "__" + property.Name)'>
+                              @Html.Display(index + "." + property.Name)
+                    </span>
                 </td>                    
             }
             <td>
+                @Html.ActionLink("Complete", "Complete", "Home", model.GetId(), new {id = "complete__" + model.GetId(), @class="btn"})
                 <div class="btn-group">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                         Action
@@ -35,10 +38,10 @@
                         @{
                             @Html.TryPartial("_actions", model)                            
                             var routevalues = model.GetIdValue();  
-                            <li>@Html.ActionLink("Edit", "Edit", routevalues)</li>
-                            <li>@Html.ActionLink("Details", "Details", routevalues)</li>
+                            <li>@Html.ActionLink("Edit", "Edit", "Home", routevalues, null)</li>
+                            <li>@Html.ActionLink("Details", "Details", "Home", routevalues, null)</li>
                             <li class="divider"></li>
-                            <li>@Html.ActionLink("Delete", "Delete", routevalues)</li>
+                            <li>@Html.ActionLink("Delete", "Delete", "Home", routevalues, null)</li>
                                
                         }
                     </ul>
@@ -51,6 +54,6 @@
 
 </table>
 <p>
-    @Html.ActionLink("Create New", "Create", null, new {@class = "btn"})
+    @Html.ActionLink("Create New", "Create", "Home", null, new {@class = "btn", id = "add-task"})
 </p>
 

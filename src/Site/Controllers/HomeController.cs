@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Models;
 
 namespace BootstrapMvcSample.Controllers
 {
     public class HomeController : BootstrapBaseController
     {
-        private static List<HomeInputModel> _models = ModelIntializer.CreateHomeInputModels();
+        private static readonly List<TodoTask> _models = new List<TodoTask>();
         public ActionResult Index()
         {
            
@@ -18,11 +19,11 @@ namespace BootstrapMvcSample.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(HomeInputModel model)
+        public ActionResult Create(TodoTask model)
         {
             if (ModelState.IsValid)
             {
-                model.Id = _models.Count==0?1:_models.Select(x => x.Id).Max() + 1;
+                model.Id = Guid.NewGuid();
                 _models.Add(model);
                 Success("Your information was saved!");
                 return RedirectToAction("Index");
@@ -33,10 +34,10 @@ namespace BootstrapMvcSample.Controllers
 
         public ActionResult Create()
         {
-            return View(new HomeInputModel());
+            return View(new TodoTask());
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             _models.Remove(_models.Get(id));
             Information("Your widget was deleted");
@@ -46,13 +47,14 @@ namespace BootstrapMvcSample.Controllers
             }
             return RedirectToAction("index");
         }
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
             var model = _models.Get(id);
             return View("Create", model);
         }
+
         [HttpPost]        
-        public ActionResult Edit(HomeInputModel model,int id)
+        public ActionResult Edit(TodoTask model, Guid id)
         {
             if(ModelState.IsValid)
             {
@@ -65,11 +67,15 @@ namespace BootstrapMvcSample.Controllers
             return View("Create", model);
         }
 
-		public ActionResult Details(int id)
+		public ActionResult Details(Guid id)
         {
             var model = _models.Get(id);
             return View(model);
         }
 
+        public ActionResult Complete(Guid taskId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
