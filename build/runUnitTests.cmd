@@ -1,1 +1,1 @@
-psake
+runPsake

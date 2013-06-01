@@ -1,0 +1,1 @@
+runPsake run-acceptance-tests-in-progress

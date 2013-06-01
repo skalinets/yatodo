@@ -1,1 +1,1 @@
-psake run-acceptance-tests-regression
+runPsake run-acceptance-tests-regression
