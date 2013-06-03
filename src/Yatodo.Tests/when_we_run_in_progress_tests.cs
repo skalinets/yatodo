@@ -1,12 +1,43 @@
 ﻿using FluentAssertions;
+using FluentAutomation;
 using Machine.Specifications;
 
 namespace Yatodo.Tests
 {
-    [Subject("Acceptance"), Tags("InProgress")]
-    public class when_we_run_in_progress_tests 
+    [Subject("Acceptance")]
+    public class when_we_run_in_progress_tests : AcceptanceTests
     {
-        It this_test_should_fail = () => true.Should().BeFalse();
-        It this_test_should_pass = () => true.Should().BeTrue();
+        Because of = () => site.OpenDinnerList();
+
+        It should_show_login_page = () => site.ShowsLoginPage();
+    }
+
+    public class AcceptanceTests
+    {
+        private Establish context = () => site = new WebSite();
+        private Cleanup _ = () => site.Dispose();
+        protected static WebSite site;
+    }
+
+    public class WebSite : FluentTest
+    {
+        static WebSite()
+        {
+            SeleniumWebDriver.Bootstrap(SeleniumWebDriver.Browser.Chrome);
+            Settings.MinimizeAllWindowsOnTestStart = false;
+        }
+
+        public void OpenDinnerList()
+        {
+            I.Open("http://localhost:9917/Dinners");
+        }
+
+        public void ShowsLoginPage()
+        {
+            I.Expect.Exists("#login");
+
+            I.Enter("text").In("#name");
+            I.Click("#submit");
+        }
     }
 }
